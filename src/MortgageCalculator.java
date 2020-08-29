@@ -8,12 +8,8 @@ public class MortgageCalculator {
       float numberOfYears = readData("Number of years left on mortgage: ");
       float numberOfPayments = numberOfYears * 12;
 
-      System.out.println(mortgageTotal);
-      System.out.println(interestRate);
-      System.out.println(numberOfYears);
-      double monthlyPayment = calculateMonthlyPayment(mortgageTotal, interestRate, numberOfPayments);
-      System.out.println(monthlyPayment);
-
+      printReport(mortgageTotal, interestRate, numberOfPayments);
+      printPaymentSchedule(mortgageTotal, interestRate, numberOfPayments);
     }
 
     public static float readData(String prompt){
@@ -21,6 +17,20 @@ public class MortgageCalculator {
         Scanner scanner = new Scanner(System.in);
         return scanner.nextFloat();
     }
+
+    public static void printReport(float total, float rate, float years) {
+        double monthlyPayment = calculateMonthlyPayment(total, rate, years);
+        System.out.println("MORTGAGE");
+        System.out.println("--------");
+        System.out.println("Monthly Payments: " + monthlyPayment);
+    }
+
+    public  static void printPaymentSchedule(float total, float rate, float years){
+        System.out.println("PAYMENT SCHEDULE");
+        System.out.println("----------------");
+        System.out.println();
+    }
+
     public static double calculateMonthlyPayment(float total, float interest, float months){
         float monthlyInterest = interest / 12;
         return total *
