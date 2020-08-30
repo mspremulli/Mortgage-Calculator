@@ -1,12 +1,14 @@
-import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class MortgageCalculator {
+    final static byte MONTHS_IN_A_YEAR = 12;
+    final static byte _100_PERCENT = 100;
+
     public static void main(String[] args) {
-      float mortgageTotal = readData("Amount left on mortgage: ");
-      float interestRate = readData("Yearly interest rate: ") / 100;
-      float numberOfYears = readData("Number of years left on mortgage: ");
-      float numberOfPayments = numberOfYears * 12;
+      int mortgageTotal = (int) readData("Amount left on mortgage: ");
+      float interestRate = (float) readData("Yearly interest rate: ") / _100_PERCENT;
+      int numberOfYears = (int) readData("Number of years left on mortgage: ");
+      int numberOfPayments = (int) (numberOfYears * MONTHS_IN_A_YEAR);
 
       printReport(mortgageTotal, interestRate, numberOfPayments);
       printPaymentSchedule(mortgageTotal, interestRate, numberOfPayments);
@@ -18,33 +20,34 @@ public class MortgageCalculator {
         return scanner.nextFloat();
     }
 
-    public static void printReport(float mortgageTotal, float interestRate, float numberOfYears) {
+    public static void printReport(int mortgageTotal, float interestRate, int numberOfYears) {
         double monthlyPayment = calculateMonthlyPayment(mortgageTotal, interestRate, numberOfYears);
+        System.out.println();
         System.out.println("MORTGAGE");
         System.out.println("--------");
         System.out.println("Monthly Payments: " + monthlyPayment);
     }
 
-    public  static void printPaymentSchedule(float mortgageTotal, float interestRate, float numberOfYears){
+    public  static void printPaymentSchedule(int mortgageTotal, float interestRate, int numberOfYears){
+        System.out.println();
         System.out.println("PAYMENT SCHEDULE");
         System.out.println("----------------");
-        for(int month = 1; month < numberOfYears * 12; month++) {
+        for(int month = 1; month <= (numberOfYears * MONTHS_IN_A_YEAR); month++) {
             System.out.println(Math.round(calculatePaymentSchedule(mortgageTotal, interestRate, numberOfYears, month)));
         }
     }
 
-    public static double calculatePaymentSchedule(float mortgageTotal, float interestRate, float numberOfYears, float numberOfPaymentsMade){
-        float monthlyInterest = interestRate / 12;
-        float numberOfPayments = numberOfYears * 12;
+    public static double calculatePaymentSchedule(int mortgageTotal, float interestRate, int numberOfYears, int numberOfPaymentsMade){
+        float monthlyInterest = interestRate / MONTHS_IN_A_YEAR;
+        float numberOfPayments = numberOfYears * MONTHS_IN_A_YEAR;
 
-        double balance = mortgageTotal *
+        return mortgageTotal *
                 (Math.pow(1 + monthlyInterest, numberOfPayments) - Math.pow(1 + monthlyInterest, numberOfPaymentsMade))
                 / (Math.pow(1 + monthlyInterest, numberOfPayments) - 1);
-        return balance;
     }
 
-    public static double calculateMonthlyPayment(float mortgageTotal, float interestRate, float months){
-        float monthlyInterest = interestRate / 12;
+    public static double calculateMonthlyPayment(int mortgageTotal, float interestRate, int months){
+        float monthlyInterest = interestRate / MONTHS_IN_A_YEAR;
         return mortgageTotal *
               ( monthlyInterest * Math.pow(1 + monthlyInterest, months))
               / (Math.pow(1 + monthlyInterest, months) - 1);
