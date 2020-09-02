@@ -12,7 +12,7 @@ public class MortgageReport {
         System.out.println();
         System.out.println("MORTGAGE");
         System.out.println("--------");
-        System.out.println("Monthly Payments: " + monthlyPayment);
+        System.out.println("Monthly Payments: " + NumberFormat.getCurrencyInstance().format(monthlyPayment));
     }
 
     public void printPaymentSchedule(

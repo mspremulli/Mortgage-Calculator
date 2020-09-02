@@ -1,4 +1,3 @@
-import java.text.NumberFormat;
 import java.util.Scanner;
 
 public class Calculator {
@@ -30,12 +29,6 @@ public class Calculator {
         return mortgageTotal *
                 ( monthlyInterest * Math.pow(1 + monthlyInterest, months))
                 / (Math.pow(1 + monthlyInterest, months) - 1);
-    }
-
-    public static float readData(String prompt){
-        System.out.println(prompt);
-        Scanner scanner = new Scanner(System.in);
-        return scanner.nextFloat();
     }
 
 }
